@@ -24,3 +24,26 @@ jobs:
       - run: go vet ./...
       - run: go build ./...
       - run: go test ./...
+  install:
+    # Runs the install scripts from this commit against the latest release.
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm, macos-latest, macos-13, windows-latest]
+    steps:
+      - uses: actions/checkout@v5
+      - name: shellcheck
+        if: runner.os == 'Linux'
+        run: shellcheck -s sh install.sh
+      - name: install.sh
+        if: runner.os != 'Windows'
+        run: |
+          HIBIRA_INSTALL_DIR="$RUNNER_TEMP/bin" sh install.sh
+          "$RUNNER_TEMP/bin/hibira" version
+      - name: install.ps1
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $env:HIBIRA_INSTALL_DIR = "$env:RUNNER_TEMP\bin"
+          ./install.ps1
+          & "$env:RUNNER_TEMP\bin\hibira.exe" version

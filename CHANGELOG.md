@@ -1,6 +1,10 @@
 # Changelog
 
-## 0.1.0 (unreleased)
+## Unreleased
+
+- `install.sh` (macOS, Linux) and `install.ps1` (Windows): one-line installers that pick the right release archive, verify its checksum and put `hibira` on your PATH.
+
+## 0.1.0
 
 - `hibira tui` (also plain `hibira` in a terminal): interactive view with a channel list, live event stream, event detail pane, and forms to subscribe and publish.
 - `hibira trigger`: publish an event to one or more channels through the HTTP API.
