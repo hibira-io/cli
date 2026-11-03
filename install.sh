@@ -1,7 +1,7 @@
 #!/bin/sh
 # Installs the hibira CLI from the GitHub releases of hibira-io/cli.
 #
-#   curl -fsSL https://raw.githubusercontent.com/hibira-io/cli/main/install.sh | sh
+#   curl -fsSL https://hibira.io/install.sh | sh
 #
 # Environment:
 #   HIBIRA_VERSION      version to install, such as v0.1.0 (default: latest)
@@ -47,7 +47,7 @@ detect_os() {
 	case "$(uname -s)" in
 		Linux) echo linux ;;
 		Darwin) echo darwin ;;
-		MINGW* | MSYS* | CYGWIN*) err "on Windows, run in PowerShell: irm https://raw.githubusercontent.com/$REPO/main/install.ps1 | iex" ;;
+		MINGW* | MSYS* | CYGWIN*) err "on Windows, run in PowerShell: irm https://hibira.io/install.ps1 | iex" ;;
 		*) err "unsupported OS $(uname -s); build from source with: go install github.com/$REPO/cmd/hibira@latest" ;;
 	esac
 }

@@ -1,6 +1,6 @@
 # Installs the hibira CLI on Windows from the GitHub releases of hibira-io/cli.
 #
-#   irm https://raw.githubusercontent.com/hibira-io/cli/main/install.ps1 | iex
+#   irm https://hibira.io/install.ps1 | iex
 #
 # Environment:
 #   HIBIRA_VERSION      version to install, such as v0.1.0 (default: latest)
