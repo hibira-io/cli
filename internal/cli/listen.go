@@ -63,9 +63,9 @@ signed locally with the app secret, so you don't need your auth endpoint.`,
 				Reconnect:    !noRetry,
 				Client:       "hibira-cli",
 				Version:      a.build.Version,
-				OnStatus: func(s string) {
+				OnStatus: func(s pusher.Status) {
 					if !quiet {
-						fmt.Fprintln(errw, "· "+s)
+						fmt.Fprintln(errw, "· "+s.Text)
 					}
 				},
 				OnMessage: func(m pusher.Message) {

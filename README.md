@@ -12,6 +12,10 @@ $ hibira trigger orders order.updated '{"id":42,"status":"shipped"}'
 Sent "order.updated" to orders (28 bytes)
 ```
 
+Run `hibira` with no arguments in a terminal for the interactive view:
+
+![The hibira interactive view: channels on the left, live events on the right, the selected event's JSON below](.github/tui.png)
+
 ## Install
 
 With Go 1.26 or later:
@@ -44,6 +48,28 @@ hibira config show                           # what will be used (secret masked)
 Profiles live in `hibira/config.json` under your user config folder (`~/.config` on Linux, `~/Library/Application Support` on macOS, `%AppData%` on Windows; `hibira config path` prints it, `HIBIRA_CONFIG` overrides it) and the file is readable by your user only. Prefer the prompt, `--secret-stdin` or the environment over `--secret`, which ends up in your shell history.
 
 ## Commands
+
+### `hibira tui [CHANNEL...]` (or just `hibira`)
+
+A full-screen view for poking at an app: your channels on the left with a live count, events streaming in on the right, and the selected event's data pretty-printed below.
+
+| Key | Does |
+| --- | --- |
+| `a` | subscribe to a channel (private and presence channels are signed locally) |
+| `t` | publish an event; the channel is prefilled from the selected one |
+| `tab`, `← →` | switch between the channel list and the event stream |
+| `↑ ↓`, `PgUp PgDn` | move through channels or events |
+| `enter` / `esc` | show only the selected channel's events / show all again |
+| `f` | jump to the newest event and keep following |
+| `x` | unsubscribe from the selected channel |
+| `c` | clear the event list |
+| `?`, `q` | all keys, quit |
+
+```sh
+hibira tui orders private-user-7 presence-room-1 --user-id alice
+```
+
+Publishing from the view needs the app ID and secret; watching only needs the key. In scripts and pipes use `listen` and `trigger` below, which print plain lines.
 
 ### `hibira trigger CHANNEL EVENT [DATA]`
 
@@ -103,4 +129,4 @@ MIT
 
 ## 中文摘要
 
-Hibira CLI 是一個在終端機裡收發即時事件的小工具，用來除錯。`hibira trigger` 透過 HTTP API 發佈事件，`hibira listen` 用 WebSocket 訂閱頻道並即時印出事件（private / presence 頻道會用 app secret 在本機簽名，不需要架 auth endpoint），`hibira channels` 列出目前有人訂閱的頻道。憑證依序從參數、環境變數（`HIBIRA_APP_ID`、`HIBIRA_APP_KEY`、`HIBIRA_APP_SECRET`、`HIBIRA_HOST`）、`hibira config set` 存的設定檔讀取。安裝：`go install github.com/hibira-io/cli/cmd/hibira@latest`，或從 Releases 下載執行檔。
+Hibira CLI 是一個在終端機裡收發即時事件的小工具，用來除錯。直接執行 `hibira` 會開啟互動介面（左邊頻道列表、右邊即時事件流、下方事件 JSON 詳情，按 `a` 訂閱、`t` 發事件）。`hibira trigger` 透過 HTTP API 發佈事件，`hibira listen` 用 WebSocket 訂閱頻道並即時印出事件（private / presence 頻道會用 app secret 在本機簽名，不需要架 auth endpoint），`hibira channels` 列出目前有人訂閱的頻道。憑證依序從參數、環境變數（`HIBIRA_APP_ID`、`HIBIRA_APP_KEY`、`HIBIRA_APP_SECRET`、`HIBIRA_HOST`）、`hibira config set` 存的設定檔讀取。安裝：`go install github.com/hibira-io/cli/cmd/hibira@latest`，或從 Releases 下載執行檔。

@@ -48,6 +48,7 @@ func (a *app) root() *cobra.Command {
 
   hibira trigger orders order.updated '{"id":42}'   publish an event
   hibira listen orders                              print events as they arrive
+  hibira                                            interactive view (same as hibira tui)
 
 Credentials come from flags, then environment variables (HIBIRA_APP_ID,
 HIBIRA_APP_KEY, HIBIRA_APP_SECRET, HIBIRA_HOST), then the profile saved
@@ -65,7 +66,18 @@ with "hibira config set". Find them on your app's page in the Hibira portal.`,
 	pf.StringVar(&a.secret, "secret", "", "app secret (env HIBIRA_APP_SECRET; prefer the env var or a profile, flags end up in shell history)")
 	pf.StringVar(&a.host, "host", "", "API and WebSocket host, with optional :port (env HIBIRA_HOST, default "+config.DefaultHost+")")
 	pf.StringVar(&a.scheme, "scheme", "", "https or http (env HIBIRA_SCHEME, default https)")
-	cmd.AddCommand(a.triggerCmd(), a.listenCmd(), a.channelsCmd(), a.configCmd(), a.versionCmd())
+	cmd.AddCommand(a.tuiCmd(), a.triggerCmd(), a.listenCmd(), a.channelsCmd(), a.configCmd(), a.versionCmd())
+	cmd.Args = cobra.NoArgs
+	cmd.RunE = func(cmd *cobra.Command, _ []string) error {
+		if !a.interactive() {
+			return cmd.Help()
+		}
+		if c, err := a.credentials(cmd); err != nil || c.Key == "" {
+			fmt.Fprintln(a.stderr, "No app key yet. Save your credentials with \"hibira config set\", or see hibira --help.")
+			return nil
+		}
+		return a.runTUI(cmd, nil, "", "", false)
+	}
 	return cmd
 }
 
