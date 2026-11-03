@@ -18,13 +18,27 @@ Run `hibira` with no arguments in a terminal for the interactive view:
 
 ## Install
 
-With Go 1.26 or later:
+macOS and Linux (Intel and Apple silicon / ARM):
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/hibira-io/cli/main/install.sh | sh
+```
+
+Windows (PowerShell):
+
+```powershell
+irm https://raw.githubusercontent.com/hibira-io/cli/main/install.ps1 | iex
+```
+
+The scripts download the right archive from the [latest release](https://github.com/hibira-io/cli/releases/latest), check it against `checksums.txt` and install `hibira` to `/usr/local/bin` when that is writable, otherwise `~/.local/bin` (`%LOCALAPPDATA%\Programs\hibira` on Windows, added to your user PATH). Set `HIBIRA_VERSION=v0.1.0` to pin a version or `HIBIRA_INSTALL_DIR` to choose the folder.
+
+With Go 1.26 or later you can also run:
 
 ```sh
 go install github.com/hibira-io/cli/cmd/hibira@latest
 ```
 
-Or download a binary for macOS, Linux or Windows from the [releases page](https://github.com/hibira-io/cli/releases).
+Or download an archive yourself from the [releases page](https://github.com/hibira-io/cli/releases).
 
 ## Credentials
 
@@ -129,4 +143,4 @@ MIT
 
 ## 中文摘要
 
-Hibira CLI 是一個在終端機裡收發即時事件的小工具，用來除錯。直接執行 `hibira` 會開啟互動介面（左邊頻道列表、右邊即時事件流、下方事件 JSON 詳情，按 `a` 訂閱、`t` 發事件）。`hibira trigger` 透過 HTTP API 發佈事件，`hibira listen` 用 WebSocket 訂閱頻道並即時印出事件（private / presence 頻道會用 app secret 在本機簽名，不需要架 auth endpoint），`hibira channels` 列出目前有人訂閱的頻道。憑證依序從參數、環境變數（`HIBIRA_APP_ID`、`HIBIRA_APP_KEY`、`HIBIRA_APP_SECRET`、`HIBIRA_HOST`）、`hibira config set` 存的設定檔讀取。安裝：`go install github.com/hibira-io/cli/cmd/hibira@latest`，或從 Releases 下載執行檔。
+Hibira CLI 是一個在終端機裡收發即時事件的小工具，用來除錯。直接執行 `hibira` 會開啟互動介面（左邊頻道列表、右邊即時事件流、下方事件 JSON 詳情，按 `a` 訂閱、`t` 發事件）。`hibira trigger` 透過 HTTP API 發佈事件，`hibira listen` 用 WebSocket 訂閱頻道並即時印出事件（private / presence 頻道會用 app secret 在本機簽名，不需要架 auth endpoint），`hibira channels` 列出目前有人訂閱的頻道。憑證依序從參數、環境變數（`HIBIRA_APP_ID`、`HIBIRA_APP_KEY`、`HIBIRA_APP_SECRET`、`HIBIRA_HOST`）、`hibira config set` 存的設定檔讀取。安裝：macOS / Linux 執行 `curl -fsSL https://raw.githubusercontent.com/hibira-io/cli/main/install.sh | sh`，Windows 在 PowerShell 執行 `irm https://raw.githubusercontent.com/hibira-io/cli/main/install.ps1 | iex`；也可以用 `go install github.com/hibira-io/cli/cmd/hibira@latest`。
