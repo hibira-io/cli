@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- `hibira approvals`: manage Hibira Approvals workspaces with an API token (`workspaces`, `create`, `members`, `add`, `remove`, `test`, `requests`). Needs a Hibira server with the Approvals workspace API.
 - `install.sh` (macOS, Linux) and `install.ps1` (Windows): one-line installers that pick the right release archive, verify its checksum and put `hibira` on your PATH.
 
 ## 0.1.0

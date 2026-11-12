@@ -120,6 +120,25 @@ hibira channels
 hibira channels --prefix presence- --info user_count
 ```
 
+### `hibira approvals`
+
+Manages [Hibira Approvals](https://hibira.io/approvals) workspaces: the people who answer your agents' and workflows' approval requests. These commands use a Hibira API token instead of an app's key and secret: make a personal token with read and write access on the portal's [API tokens](https://hibira.io/portal/api-tokens) page and set `HIBIRA_API_TOKEN`. The token acts as its owner's (verified) email.
+
+```console
+$ hibira approvals workspaces
+ID                    NAME           PLAN  ROLE   WAITING
+apw_673c619d0c52a683  Ops approvals  free  admin  0
+
+$ hibira approvals add apw_673c619d0c52a683 dba@example.com --role approver
+dba@example.com is now an approver in Ops approvals. They sign in at approvals.hibira.io with that email.
+
+$ hibira approvals test apw_673c619d0c52a683
+Sent apr_d702b2cdd68af3f7eb40: Test request: deploy to production
+Answer it on your phone or at https://approvals.hibira.io/inbox/apr_d702b2cdd68af3f7eb40
+```
+
+Also `create NAME`, `members WORKSPACE`, `remove WORKSPACE EMAIL` and `requests WORKSPACE [--history]`; `--json` prints the API's answer.
+
 ### Shell completion
 
 ```sh
@@ -143,4 +162,4 @@ MIT
 
 ## 中文摘要
 
-Hibira CLI 是一個在終端機裡收發即時事件的小工具，用來除錯。直接執行 `hibira` 會開啟互動介面（左邊頻道列表、右邊即時事件流、下方事件 JSON 詳情，按 `a` 訂閱、`t` 發事件）。`hibira trigger` 透過 HTTP API 發佈事件，`hibira listen` 用 WebSocket 訂閱頻道並即時印出事件（private / presence 頻道會用 app secret 在本機簽名，不需要架 auth endpoint），`hibira channels` 列出目前有人訂閱的頻道。憑證依序從參數、環境變數（`HIBIRA_APP_ID`、`HIBIRA_APP_KEY`、`HIBIRA_APP_SECRET`、`HIBIRA_HOST`）、`hibira config set` 存的設定檔讀取。安裝：macOS / Linux 執行 `curl -fsSL https://hibira.io/install.sh | sh`，Windows 在 PowerShell 執行 `irm https://hibira.io/install.ps1 | iex`；也可以用 `go install github.com/hibira-io/cli/cmd/hibira@latest`。
+Hibira CLI 是一個在終端機裡收發即時事件的小工具，用來除錯。直接執行 `hibira` 會開啟互動介面（左邊頻道列表、右邊即時事件流、下方事件 JSON 詳情，按 `a` 訂閱、`t` 發事件）。`hibira trigger` 透過 HTTP API 發佈事件，`hibira listen` 用 WebSocket 訂閱頻道並即時印出事件（private / presence 頻道會用 app secret 在本機簽名，不需要架 auth endpoint），`hibira channels` 列出目前有人訂閱的頻道。`hibira approvals` 用 Hibira API token（環境變數 `HIBIRA_API_TOKEN`）管理 Approvals 工作區：列出工作區、建立、加入或移除成員、傳一筆測試請求給自己。憑證依序從參數、環境變數（`HIBIRA_APP_ID`、`HIBIRA_APP_KEY`、`HIBIRA_APP_SECRET`、`HIBIRA_HOST`）、`hibira config set` 存的設定檔讀取。安裝：macOS / Linux 執行 `curl -fsSL https://hibira.io/install.sh | sh`，Windows 在 PowerShell 執行 `irm https://hibira.io/install.ps1 | iex`；也可以用 `go install github.com/hibira-io/cli/cmd/hibira@latest`。
