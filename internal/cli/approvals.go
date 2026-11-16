@@ -26,7 +26,7 @@ func (a *app) approvalsCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "approvals",
 		Short: "Manage Hibira Approvals workspaces: members, test requests",
-		Long: `Manage Hibira Approvals workspaces (approvals.hibira.io) from the terminal.
+		Long: `Manage Hibira Approvals workspaces from the terminal.
 
 These commands use a Hibira API token, not an app's key and secret: make a
 personal token with read and write access on the portal's API tokens page
@@ -150,7 +150,7 @@ change the ones where it is an admin.`,
 				return err
 			}
 			return print(cmd, raw, func(w io.Writer) error {
-				fmt.Fprintf(w, "%s is now %s in %s. They sign in at approvals.hibira.io with that email.\n", args[1], aOrAn(role), ws.Name)
+				fmt.Fprintf(w, "%s is now %s in %s. They sign in at hibira.io/portal/approvals with that email.\n", args[1], aOrAn(role), ws.Name)
 				return nil
 			})
 		},

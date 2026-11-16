@@ -130,11 +130,11 @@ ID                    NAME           PLAN  ROLE   WAITING
 apw_673c619d0c52a683  Ops approvals  free  admin  0
 
 $ hibira approvals add apw_673c619d0c52a683 dba@example.com --role approver
-dba@example.com is now an approver in Ops approvals. They sign in at approvals.hibira.io with that email.
+dba@example.com is now an approver in Ops approvals. They sign in at hibira.io/portal/approvals with that email.
 
 $ hibira approvals test apw_673c619d0c52a683
 Sent apr_d702b2cdd68af3f7eb40: Test request: deploy to production
-Answer it on your phone or at https://approvals.hibira.io/inbox/apr_d702b2cdd68af3f7eb40
+Answer it on your phone or at https://hibira.io/portal/approvals/inbox/apr_d702b2cdd68af3f7eb40
 ```
 
 Also `create NAME`, `members WORKSPACE`, `remove WORKSPACE EMAIL` and `requests WORKSPACE [--history]`; `--json` prints the API's answer.
