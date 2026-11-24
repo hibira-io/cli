@@ -28,7 +28,7 @@ func TestApprovalsCommands(t *testing.T) {
 			}
 			_, _ = w.Write([]byte(`{"id":"apw_1","name":"Ops"}`))
 		case r.Method == http.MethodPost && r.URL.Path == "/api/v1/approvals/workspaces/apw_1/test":
-			_, _ = w.Write([]byte(`{"approval_id":"apr_1","title":"Test request","status":"pending","inbox_url":"https://approvals.hibira.io/inbox/apr_1"}`))
+			_, _ = w.Write([]byte(`{"approval_id":"apr_1","title":"Test request","status":"pending","inbox_url":"https://hibira.io/portal/approvals/inbox/apr_1"}`))
 		case r.Method == http.MethodDelete:
 			w.WriteHeader(http.StatusNoContent)
 		default:
@@ -45,7 +45,7 @@ func TestApprovalsCommands(t *testing.T) {
 	if out, err = run(t, env, "", "approvals", "add", "apw_1", "dba@example.com", "--role", "viewer"); err != nil || !strings.Contains(out, "a viewer") {
 		t.Fatalf("add %q %v", out, err)
 	}
-	if out, err = run(t, env, "", "approvals", "test", "apw_1"); err != nil || !strings.Contains(out, "approvals.hibira.io/inbox/apr_1") {
+	if out, err = run(t, env, "", "approvals", "test", "apw_1"); err != nil || !strings.Contains(out, "hibira.io/portal/approvals/inbox/apr_1") {
 		t.Fatalf("test %q %v", out, err)
 	}
 	if _, err = run(t, env, "", "approvals", "remove", "apw_1", "dba@example.com"); err != nil {
